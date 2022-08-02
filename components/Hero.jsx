@@ -8,6 +8,7 @@ export default function Hero({ heading, message }) {
     <div
       className={`${styles.heroImg_large}   flex flex-col gap-2 items-center justify-center w-full h-screen bg-fixed bg-center bg-cover`}
     >
+    
       {/* overlay */}
       <div className="w-full h-screen bg-gradient-to-r from-green-700 to-orange-700 opacity-30  absolute top-0 bottom-0 left-0 right-0 z-[1] " />
 

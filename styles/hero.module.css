@@ -1,8 +1,4 @@
 .heroImg_large{
-    background-image: url(../public/bg-large.jpg);
-    
-}
-.heroImg_small{
-    background-image: url(../public/bg-small.jpg);
+    background-image: url(/bg-large.jpg);
     
 }

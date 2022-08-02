@@ -11,9 +11,11 @@ import {
 } from "react-icons/ai";
 import Cart from "./Cart";
 
-export default function NavBar({ scrollAt, cartCount }) {
+export default function NavBar({ scrollAt, cartItems, removeItem }) {
   const [nav, setNav] = useState(false);
   const [scroll, setScroll] = useState(false);
+
+  const CartComponent = () =>{return <Cart cartItems ={cartItems}/>}
 
   useEffect(() => {
     const handleNavColor = () => {
@@ -37,12 +39,12 @@ export default function NavBar({ scrollAt, cartCount }) {
       <div className="mr-auto md:w-fit w-[120px]   md:ml-12 self-center ">
         <Link href={"/"}>
           <a>
-            <ProfileLogo image={`/../public/niic.png`} />
+            <ProfileLogo image={`/niic.png`} />
           </a>
         </Link>
       </div>
       <div className={`md:hidden flex flex-row ${nav? "items-start" : "items-center"}`}>
-        <div><Cart count ={cartCount} /></div>
+        <div><Cart cartItems ={cartItems} removeItem={removeItem} /></div>
         {/* mobile nav button */}
         <div className=" flex flex-col gap-3 items-end">
           <button className="text-2xl p-4" onClick={() => setNav(!nav)}>
@@ -59,7 +61,7 @@ export default function NavBar({ scrollAt, cartCount }) {
 
       {/* nav */}
       <div className="hidden text-2xl md:flex items-start p-6 gap-3">
-        <Cart count ={cartCount}/>
+        <Cart cartItems ={cartItems} removeItem={removeItem}/>
         <NavItem _text={"Home"} _link={"/"} />
         <NavItem _text={"Socials"} _link={"/"} />
       </div>
