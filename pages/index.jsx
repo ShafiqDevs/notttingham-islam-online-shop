@@ -45,7 +45,7 @@ export default function Home({ backendData }) {
         <link rel="icon" href="/niic.png" />
       </Head>{" "}
       <NavBar scrollAt={244} cartItems={cartItems} removeItem={removeItem} />{" "}
-      <Hero />{" "}
+      <Hero heading="Nottingham Islam Shop" message="Multiple Quran translations available" />{" "}
       <div className=" w-full bg-gradient-to-r from-green-700/30 to-orange-700/30  py-[7rem] px-6">
         <div className="border rounded-lg md:p-4">
           <>
