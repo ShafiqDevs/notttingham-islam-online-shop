@@ -1,5 +1,5 @@
 import React from "react";
-import Feedback from "../components/feedback";
+import Feedback from "../components/Feedback";
 import NavBar from "./../components/NavBar";
 
 export default function Cancel() {
