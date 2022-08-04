@@ -11,7 +11,7 @@ import {
 } from "react-icons/ai";
 import Cart from "./Cart";
 
-export default function NavBar({ scrollAt, cartItems, removeItem }) {
+export default function NavBar({ scrollAt =244, cartItems, removeItem }) {
   const [nav, setNav] = useState(false);
   const [scroll, setScroll] = useState(false);
 
@@ -27,7 +27,7 @@ export default function NavBar({ scrollAt, cartItems, removeItem }) {
     };
 
     window.addEventListener("scroll", handleNavColor);
-  }, []);
+  }, [scrollAt]);
 
   const defaultNav =
     "fixed w-full h-fit  left-0 right-0 top-0 bottom-0 flex items-start justify-end p-4 bg-transparent z-10";

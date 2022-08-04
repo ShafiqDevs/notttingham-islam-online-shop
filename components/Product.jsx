@@ -7,11 +7,12 @@ export default function Product({
   onAdd,
   _id,
   item_Name,
+  price,
   totalPrice,
   text,
   imgUrl,
 }) {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   let quantityAlert = false;
 
   function handleChange(event) {
@@ -24,7 +25,7 @@ export default function Product({
       <h1 className=" absolute left-0 top-0 w-fit z-[1] text-orange-400 font-semibold text-xl rounded-br-lg p-1 bg-blue-100 shadow-md shadow-slate-400">{`£${totalPrice.toFixed(
         2
       )}`}</h1>
-      <Image src={imgUrl} width={300} height={300} />
+      <Image src={imgUrl} width={300} height={300} alt={`product - ${item_Name}`} />
       <div className=" font-semibold text-black text-center px-2">
         <h1 className="text-2xl border-b-2">{_.startCase(item_Name)}</h1>
         <p className="border-b-2">{text}</p>
@@ -33,7 +34,7 @@ export default function Product({
         <input
           className="bg-white shadow-md rounded text-black text-center"
           onChange={handleChange}
-          myval={quantity}
+          value={quantity}
           min={0}
           max={10}
           type="number"
@@ -46,8 +47,9 @@ export default function Product({
             const product_in_grid = {
               product_id: _id,
               item_Name: item_Name,
-              totalPrice: totalPrice * quantity,
+              price: price,
               quantity: parseInt(quantity),
+              totalPrice: price * quantity,
               imgUrl: imgUrl,
             };
             onAdd(product_in_grid);
