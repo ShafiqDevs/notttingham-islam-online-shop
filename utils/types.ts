@@ -18,7 +18,8 @@ type Parcel = {
 };
 
 type Customer = {
-	Name: string;
+	FirstName: string;
+	LastName: string;
 	Property: string;
 	Street: string;
 	Town: string;

@@ -6,8 +6,20 @@ import { Customer } from '../utils/types';
 type Props = {};
 
 export default function Cart({}: Props) {
-	const [isOpen, setisOpen] = useState<boolean>(true);
+	const [isOpen, setisOpen] = useState<boolean>(false);
 	const [onCheckout, setonCheckout] = useState<boolean>(false);
+	const [customer, setCustomer] = useState<Customer>({
+		Country: ``,
+		County: ``,
+		Email: ``,
+		FirstName: ``,
+		LastName: ``,
+		Postcode: ``,
+		Property: ``,
+		Street: ``,
+		Telephone: ``,
+		Town: ``,
+	});
 
 	const CartItem = () => {
 		return (
@@ -36,6 +48,14 @@ export default function Cart({}: Props) {
 		setisOpen((prev) => !prev);
 	};
 
+	const handleFormChange = (event: React.FormEvent<HTMLInputElement>) => {
+		const { name, value } = event.currentTarget;
+
+		setCustomer((prev) => {
+			return { ...prev, [name]: value };
+		});
+	};
+
 	return (
 		<div className='relative'>
 			<h1
@@ -56,55 +76,105 @@ export default function Cart({}: Props) {
 										className='border opacity-70 p-3 rounded-md'
 										type='text'
 										placeholder='First name'
+										name='FirstName'
+										value={customer.FirstName}
+										onChange={(e) => {
+											handleFormChange(e);
+										}}
 									/>
 									<input
 										className='border opacity-70 p-3 rounded-md'
 										type='text'
+										name='LastName'
+										value={customer.LastName}
+										onChange={(e) => {
+											handleFormChange(e);
+										}}
 										placeholder='Last name'
 									/>
 								</div>
 								<input
 									className='border opacity-70 p-3 rounded-md'
 									type='text'
+									name='Property'
+									value={customer.Property}
+									onChange={(e) => {
+										handleFormChange(e);
+									}}
 									placeholder='Address line'
 								/>
 								<div className='flex gap-2 justify-center'>
 									<input
 										className='border opacity-70 p-3 rounded-md'
 										type='text'
+										name='Street'
+										value={customer.Street}
+										onChange={(e) => {
+											handleFormChange(e);
+										}}
 										placeholder='Street'
 									/>
 									<input
 										className='border opacity-70 p-3 rounded-md'
 										type='text'
+										name='Town'
+										value={customer.Town}
+										onChange={(e) => {
+											handleFormChange(e);
+										}}
 										placeholder='Town'
 									/>
 								</div>
 								<input
 									className='border opacity-70 p-3 rounded-md'
 									type='text'
+									name='County'
+									value={customer.County}
+									onChange={(e) => {
+										handleFormChange(e);
+									}}
 									placeholder='County'
 								/>
 								<input
 									className='border opacity-70 p-3 rounded-md'
 									type='text'
+									name='Country'
+									value={customer.Country}
+									onChange={(e) => {
+										handleFormChange(e);
+									}}
 									placeholder='Country'
 								/>
 								<div className='flex gap-2 justify-center'>
 									<input
 										className='border opacity-70 p-3 rounded-md'
 										type='text'
+										name='Postcode'
+										value={customer.Postcode}
+										onChange={(e) => {
+											handleFormChange(e);
+										}}
 										placeholder='Post code'
 									/>
 									<input
 										className='border opacity-70 p-3 rounded-md'
 										type='text'
+										name='Telephone'
+										value={customer.Telephone}
+										onChange={(e) => {
+											handleFormChange(e);
+										}}
 										placeholder='Telephone'
 									/>
 								</div>
 								<input
 									className='border opacity-70 p-3 rounded-md'
 									type='text'
+									name='Email'
+									value={customer.Email}
+									onChange={(e) => {
+										handleFormChange(e);
+									}}
 									placeholder='Email address'
 								/>
 								<div className=' flex flex-col w-full h-fit mt-auto gap-2'>
@@ -154,56 +224,106 @@ export default function Cart({}: Props) {
 									<input
 										className='border opacity-70 p-3 rounded-md w-full'
 										type='text'
+										name='FirstName'
+										value={customer.FirstName}
+										onChange={(e) => {
+											handleFormChange(e);
+										}}
 										placeholder='First name'
 									/>
 									<input
 										className='border opacity-70 p-3 rounded-md w-full'
 										type='text'
+										name='LastName'
+										value={customer.LastName}
+										onChange={(e) => {
+											handleFormChange(e);
+										}}
 										placeholder='Last name'
 									/>
 								</div>
 								<input
 									className='border opacity-70 p-3 rounded-md'
 									type='text'
+									name='Property'
+									value={customer.Property}
+									onChange={(e) => {
+										handleFormChange(e);
+									}}
 									placeholder='Address line'
 								/>
 								<div className='flex gap-2 justify-center'>
 									<input
 										className='border opacity-70 p-3 rounded-md w-full'
 										type='text'
+										name='Street'
+										value={customer.Street}
+										onChange={(e) => {
+											handleFormChange(e);
+										}}
 										placeholder='Street'
 									/>
 									<input
 										className='border opacity-70 p-3 rounded-md w-full'
 										type='text'
+										name='Town'
+										value={customer.Town}
+										onChange={(e) => {
+											handleFormChange(e);
+										}}
 										placeholder='Town'
 									/>
 								</div>
 								<input
 									className='border opacity-70 p-3 rounded-md'
 									type='text'
+									name='County'
+									value={customer.County}
+									onChange={(e) => {
+										handleFormChange(e);
+									}}
 									placeholder='County'
 								/>
 								<input
 									className='border opacity-70 p-3 rounded-md'
 									type='text'
+									name='Country'
+									value={customer.Country}
+									onChange={(e) => {
+										handleFormChange(e);
+									}}
 									placeholder='Country'
 								/>
 								<div className='flex gap-2 justify-center'>
 									<input
 										className='border opacity-70 p-3 rounded-md w-full'
 										type='text'
+										name='Postcode'
+										value={customer.Postcode}
+										onChange={(e) => {
+											handleFormChange(e);
+										}}
 										placeholder='Post code'
 									/>
 									<input
 										className='border opacity-70 p-3 rounded-md w-full'
 										type='text'
+										name='Telephone'
+										value={customer.Telephone}
+										onChange={(e) => {
+											handleFormChange(e);
+										}}
 										placeholder='Telephone'
 									/>
 								</div>
 								<input
 									className='border opacity-70 p-3 rounded-md'
 									type='text'
+									name='Email'
+									value={customer.Email}
+									onChange={(e) => {
+										handleFormChange(e);
+									}}
 									placeholder='Email address'
 								/>
 								<div className=' flex flex-col w-full h-fit mt-auto gap-2'>
