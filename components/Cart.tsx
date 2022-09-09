@@ -1,11 +1,17 @@
 import { useState } from 'react';
 import { BsCart } from 'react-icons/bs';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { Customer } from '../utils/types';
+import { Customer, CartItem } from '../utils/types';
+const { v4: uuidv4 } = require('uuid');
 
-type Props = {};
+type Props = {
+	cartItems: CartItem[];
+	onRemove: (index: number) => void;
+	onClear: () => void;
+	onPay: (customer: Customer) => void;
+};
 
-export default function Cart({}: Props) {
+export default function Cart(props: Props) {
 	const [isOpen, setisOpen] = useState<boolean>(false);
 	const [onCheckout, setonCheckout] = useState<boolean>(false);
 	const [customer, setCustomer] = useState<Customer>({
@@ -21,20 +27,26 @@ export default function Cart({}: Props) {
 		Town: ``,
 	});
 
-	const CartItem = () => {
+	const CartItem = (cartItem: CartItem, index: number) => {
 		return (
-			<div className='flex items-center gap-8 bg-custome_blue md:w-max w-full p-4'>
+			<div
+				key={uuidv4()}
+				className='flex items-center gap-8 bg-custome_blue md:w-max w-full p-4'>
 				<img
 					src={`/niic.png`}
 					alt='img'
 					className='w-[70px] h-full object-cover'
 				/>
 				<div className='flex flex-col items-center'>
-					<h1 className='text-xl md:text-2xl font-semibold'>English Quran</h1>
-					<h1 className='text-sm text-custome_gray'>Qnt: 3x</h1>
-					<h1 className='text-sm text-custome_gray'>£75.20</h1>
+					<h1 className='text-xl md:text-2xl font-semibold'>
+						{cartItem.ItemName}
+					</h1>
+					<h1 className='text-sm text-custome_gray'>{`Qnt: ${cartItem.Quantity}x`}</h1>
+					<h1 className='text-sm text-custome_gray'>{`£${cartItem.Value}`}</h1>
 				</div>
-				<button className='bg-red-800 hover:bg-red-500 rounded-md p-2 text-sm'>
+				<button
+					className='bg-red-800 hover:bg-red-500 rounded-md p-2 text-sm'
+					onClick={() => props.onRemove(index)}>
 					Remove
 				</button>
 			</div>
@@ -42,7 +54,8 @@ export default function Cart({}: Props) {
 	};
 
 	const toggleCheckout = () => {
-		setonCheckout((prev) => !prev);
+		if (props.cartItems.length < 1) return;
+		else setonCheckout((prev) => !prev);
 	};
 	const toggleCart = () => {
 		setisOpen((prev) => !prev);
@@ -54,6 +67,25 @@ export default function Cart({}: Props) {
 		setCustomer((prev) => {
 			return { ...prev, [name]: value };
 		});
+	};
+
+	const isFilled = (text: string): boolean => {
+		return text.length > 0;
+	};
+
+	const verifyCustomer = () => {
+		isFilled(customer.FirstName) &&
+		isFilled(customer.LastName) &&
+		isFilled(customer.Property) &&
+		isFilled(customer.Street) &&
+		isFilled(customer.Town) &&
+		isFilled(customer.County) &&
+		isFilled(customer.Country) &&
+		isFilled(customer.Postcode) &&
+		isFilled(customer.Telephone) &&
+		isFilled(customer.Email)
+			? props.onPay(customer)
+			: alert(`Please fill in your billing details`);
 	};
 
 	return (
@@ -68,8 +100,9 @@ export default function Cart({}: Props) {
 			{isOpen && (
 				<>
 					{/* desktop view */}
-					<div className=' hidden md:flex flex-col gap-2 absolute right-[100px] bottom-[50px] w-fit h-[600px] overflow-y-auto overflow-x-hidden overscroll-none  bg-white p-3 rounded-xl'>
+					<div className=' hidden md:flex flex-col gap-2 absolute right-[100px] bottom-[50px] w-fit min-w-[400px] h-[600px] overflow-y-auto overflow-x-hidden overscroll-none  bg-white p-3 rounded-xl'>
 						{onCheckout ? (
+							// show customer info inputs
 							<>
 								<div className='flex gap-2 justify-center'>
 									<input
@@ -178,7 +211,9 @@ export default function Cart({}: Props) {
 									placeholder='Email address'
 								/>
 								<div className=' flex flex-col w-full h-fit mt-auto gap-2'>
-									<button className='w-full text-xl md:text-2xl rounded-md p-2 text-green_seconday border-2 font-semibold'>
+									<button
+										className='w-full text-xl md:text-2xl rounded-md p-2 text-green_seconday border-2 font-semibold'
+										onClick={() => verifyCustomer()}>
 										Pay
 									</button>
 									<button
@@ -190,13 +225,14 @@ export default function Cart({}: Props) {
 							</>
 						) : (
 							<>
-								<CartItem />
-								<CartItem />
-								<CartItem />
-								<CartItem />
-								<CartItem />
+								{/* add cartItems here */}
+								{props.cartItems.map((item, index) => {
+									return CartItem(item, index);
+								})}
 								<div className=' flex flex-col w-full h-fit mt-auto gap-2'>
-									<button className='w-full text-xl md:text-2xl bg-red-600 hover:bg-red-500 rounded-md p-2 text-white'>
+									<button
+										className='w-full text-xl md:text-2xl bg-red-600 hover:bg-red-500 rounded-md p-2 text-white'
+										onClick={() => props.onClear()}>
 										CLEAR
 									</button>
 									<button
@@ -327,7 +363,9 @@ export default function Cart({}: Props) {
 									placeholder='Email address'
 								/>
 								<div className=' flex flex-col w-full h-fit mt-auto gap-2'>
-									<button className='w-full text-xl md:text-2xl rounded-md p-2 text-green_seconday border-2 font-semibold'>
+									<button
+										className='w-full text-xl md:text-2xl rounded-md p-2 text-green_seconday border-2 font-semibold'
+										onClick={() => verifyCustomer()}>
 										Pay
 									</button>
 									<button
@@ -340,12 +378,14 @@ export default function Cart({}: Props) {
 						) : (
 							<div className='p-2 w-full h-full '>
 								<div className='flex flex-col gap-2'>
-									<CartItem />
-									<CartItem />
-									<CartItem />
-
+									<>{/* add cartItems here */}</>
+									{props.cartItems.map((item, index) => {
+										return CartItem(item, index);
+									})}
 									<div className='pb-9 flex flex-col gap-3'>
-										<button className='w-full text-xl md:text-2xl bg-red-600 hover:bg-red-500 rounded-md p-3 text-white'>
+										<button
+											className='w-full text-xl md:text-2xl bg-red-600 hover:bg-red-500 rounded-md p-3 text-white'
+											onClick={() => props.onClear()}>
 											CLEAR
 										</button>
 										<button

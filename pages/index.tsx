@@ -1,11 +1,25 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetServerSideProps } from 'next';
+import { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Cart from '../components/Cart';
-import Product from '../components/Product';
+import ProductItem from '../components/ProductItem';
 import styles from '../styles/Home.module.css';
+import { getProducts } from '../utils/supabase';
+import { Product, CartItem, Customer } from '../utils/types';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+const { v4: uuidv4 } = require('uuid');
 
-const Home: NextPage = () => {
+type PageProps = {
+	products: Product[];
+};
+
+const Home: NextPage<PageProps> = (props: PageProps) => {
+	const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+	const router = useRouter();
+
 	const Hero = () => {
 		return (
 			<div className='relative w-full h-[300px] md:h-[600px]'>
@@ -23,30 +37,91 @@ const Home: NextPage = () => {
 		);
 	};
 
+	const addToCart = (product: Product) => {
+		setCartItems((prev: CartItem[]) => {
+			const i = prev.findIndex((item) => item.ItemName === product.ItemName);
+			if (i > -1) {
+				prev[i].Quantity += product.Quantity;
+				prev[i].Value = Number(
+					((product.Value + product.DeliveryCost) * prev[i].Quantity).toFixed(2)
+				);
+				return [...prev];
+			} else {
+				return [
+					...prev,
+					{
+						uid: product.uid,
+						ItemName: product.ItemName,
+						Quantity: product.Quantity,
+						Value: (product.Value + product.DeliveryCost) * product.Quantity,
+						Image: product.Image,
+					},
+				];
+			}
+		});
+	};
+	const removeFromCart = (index: number) => {
+		setCartItems(
+			cartItems.filter((item, i) => {
+				return i != index;
+			})
+		);
+	};
+	const clearCart = () => {
+		setCartItems([]);
+	};
+
+	const pay = async (customer: Customer) => {
+		const { data } = await axios.post(`/api/checkout`, {
+			customer,
+			cartItems,
+		});
+		router.push(data.checkout_url);
+	};
+
 	return (
 		<div className='primary_gradient w-full h-fit p- relative'>
 			<Hero />
 			<div className=' fixed right-[5vw] bottom-[10vh] z-10'>
-				<Cart />
+				<Cart
+					cartItems={cartItems}
+					onRemove={removeFromCart}
+					onClear={clearCart}
+					onPay={(customer) => pay(customer)}
+				/>
 			</div>
-      <h1></h1>
+			<h1></h1>
 			<div className='grid md:grid-cols-4 gap-2 w-full h-full mt-11 p-7'>
-				<Product />
-				<Product />
-				<Product />
-				<Product />
-				<Product />
-				<Product />
-				<Product />
-				<Product />
-				<Product />
-				<Product />
+				{props.products.map((product: Product) => {
+					return (
+						<ProductItem
+							key={uuidv4()}
+							product={product}
+							onAdd={addToCart}
+						/>
+					);
+				})}
 			</div>
 		</div>
 	);
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const products = await getProducts();
+	if (products) {
+		return {
+			props: {
+				products,
+			},
+		};
+	}
+
+	return {
+		props: {},
+	};
+};
 
 // <Head>
 //         <title>Create Next App</title>

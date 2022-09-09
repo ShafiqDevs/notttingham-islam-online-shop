@@ -1,11 +1,11 @@
 type Parcel = {
 	'Item Name': string;
-	Value: string;
-	Quantity: Number;
-	Weight: Number;
-	Height: Number;
-	Length: Number;
-	Width: Number;
+	Value: number;
+	Quantity: number;
+	Weight: number;
+	Height: number;
+	Length: number;
+	Width: number;
 	Name: string;
 	Property: string;
 	Street: string;
@@ -31,18 +31,31 @@ type Customer = {
 };
 
 type Product = {
-	'Item Name': string;
-	Quantity: Number;
-	Value: string;
-	Image: string;
-	QuranCount: number;
+	uid: number;
+	ItemName: string;
+	Quantity: number;
+	Value: number;
+	DeliveryCost: number;
+	Image?: string;
+	QuranCount?: number;
 };
 
 type CartItem = {
-	'Item Name': string;
-	Quantity: Number;
-	Value: string;
-	Image: string;
+	uid: number;
+	ItemName: string;
+	Quantity: number;
+	Value: number;
+	Image?: string;
 };
 
-export type { Parcel, CartItem, Customer, Product };
+type CheckoutMetadata = {
+	orderInfo: [
+		{
+			uid?: number;
+			Quantity?: number;
+		}
+	];
+	customer: Customer;
+};
+
+export type { Parcel, CartItem, Customer, Product,CheckoutMetadata };
