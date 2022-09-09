@@ -3,9 +3,11 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 type Props = {};
-const router = useRouter();
 
 const Success: NextPage<Props> = ({}: Props) => {
+
+	const router = useRouter();
+	
 	return (
 		<div className='flex flex-col md:gap-3 gap-10 text-white p-8 justify-center items-center my-auto text-center bg-green_primary w-full h-full mt-5 md:h-80 md:w-fit md:p-8 mx-auto rounded-lg '>
 			<h1 className='text-xl md:text-3xl font-semibold'>
