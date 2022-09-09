@@ -49,7 +49,8 @@ const getParcelData = async (uid: number): Promise<any> => {
 };
 
 const insertParcel = async (parcels: Parcel[]) => {
-	const { data, error } = await supabase.from(`parcels`).insert(parcels);
+	let { data, error } = await supabase.from(`parcels`).insert(parcels);
+	let { data:history, error:error_history } = await supabase.from(`history`).insert(parcels);
 	console.log(error);
 };
 
