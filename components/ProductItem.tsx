@@ -17,7 +17,6 @@ export default function ProductItem(props: Props) {
 		Image: props.product.Image,
 	});
 
-
 	const handleProductQuantity = (e: React.FormEvent<HTMLInputElement>) => {
 		const { value } = e.currentTarget;
 		const Quantity = parseInt(value);
@@ -27,15 +26,18 @@ export default function ProductItem(props: Props) {
 	};
 
 	return (
-		<div className='flex flex-col w-full h-fit text-center bg-custome_blue rounded-lg overflow-hidden text-white relative'>
+		<div className='flex flex-col mx-auto max-w-sm md:w-full h-full text-center bg-custome_blue rounded-lg overflow-hidden text-white relative'>
 			<img
-				src='/bg-large.jpg'
+				src={props.product.Image || `/bg-large.jpg`}
 				alt=''
+				width={100}
+				height={100}
+				className='w-full max-h-72 object-cover'
 			/>
 			<div className='flex flex-col gap-4 p-2'>
 				<h1 className='text-2xl font-semibold'>{product.ItemName}</h1>
 				<h1 className='text-sm text-custome_gray'>
-					{`A box containing ${product.QuranCount || `<later..>`} Qurans`}
+					{`A box containing ${props.product.QuranCount || 'xyz'} Qurans`}
 				</h1>
 				<div className='flex justify-end gap-4 rounded-md text-black'>
 					<input

@@ -91,7 +91,7 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
 				/>
 			</div>
 			<h1></h1>
-			<div className='grid md:grid-cols-4 gap-2 w-full h-full mt-11 p-7'>
+			<div className='grid md:grid-cols-3 lg:grid-cols-4  gap-2 w-full h-full mt-11 p-7'>
 				{props.products.map((product: Product) => {
 					return (
 						<ProductItem
