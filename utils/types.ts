@@ -17,6 +17,27 @@ type Parcel = {
 	Email: string;
 };
 
+type History = {
+	'Item Name': string;
+	created_at: string;
+	Value: number;
+	Quantity: number;
+	Weight: number;
+	Height: number;
+	Length: number;
+	Width: number;
+	Name: string;
+	Property: string;
+	Street: string;
+	Town: string;
+	County: string;
+	Postcode: string;
+	Country: string;
+	Telephone: string;
+	Email: string;
+	uid: string;
+};
+
 type Customer = {
 	FirstName: string;
 	LastName: string;
@@ -58,4 +79,4 @@ type CheckoutMetadata = {
 	customer: Customer;
 };
 
-export type { Parcel, CartItem, Customer, Product,CheckoutMetadata };
+export type { Parcel, CartItem, Customer, Product, CheckoutMetadata, History };

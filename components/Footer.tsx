@@ -6,7 +6,7 @@ type Props = {};
 export default function Footer({}: Props) {
 	const router = useRouter();
 	return (
-		<div className='flex flex-col md:flex-row justify-center items-center gap-14 p-8'>
+		<div className=' flex flex-col md:flex-row justify-center items-center gap-14 p-8'>
 			<div className='h-fit md:h-fit bg-white flex flex-col justify-center items-center gap-4'>
 				<div className='flex flex-col md:flex-row gap-5 md:gap-3 items-center'>
 					<img
@@ -58,10 +58,10 @@ export default function Footer({}: Props) {
 			</div>
 
 			<iframe
-				className='shadow-lg w-full md:w-[500px]  '
+				className='shadow-lg shadow-black/30 w-full md:w-[500px]  '
 				src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2403.320006433068!2d-1.1728208840462258!3d52.96065751123065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4879c18c6be8b6c9%3A0xf52a0cdf1bdc3e0b!2sNottingham%20Islam%20Information%20Centre!5e0!3m2!1sen!2suk!4v1662815965447!5m2!1sen!2suk'
 				// width='400'
-				height='300'
+				height='150'
 				style={{ border: 0 }}
 				allowFullScreen={true}
 				loading='lazy'

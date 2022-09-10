@@ -54,7 +54,12 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
 						uid: product.uid,
 						ItemName: product.ItemName,
 						Quantity: product.Quantity,
-						Value: (product.Value + product.DeliveryCost) * product.Quantity,
+						Value: Number(
+							(
+								(product.Value + product.DeliveryCost) *
+								product.Quantity
+							).toFixed(2)
+						),
 						Image: product.Image,
 					},
 				];

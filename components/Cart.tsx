@@ -45,7 +45,7 @@ export default function Cart(props: Props) {
 					<h1 className='text-sm text-custome_gray'>{`£${cartItem.Value}`}</h1>
 				</div>
 				<button
-					className='bg-red-800 hover:bg-red-500 rounded-md p-2 text-sm ml-auto'
+					className='bg-red-800 hover:bg-red-500 rounded-md p-2 text-sm ml-auto text-white'
 					onClick={() => props.onRemove(index)}>
 					Remove
 				</button>
@@ -86,6 +86,12 @@ export default function Cart(props: Props) {
 		isFilled(customer.Email)
 			? props.onPay(customer)
 			: alert(`Please fill in your billing details`);
+	};
+
+	const countTotal = (): number => {
+		let total: number = 0;
+		for (const item of props.cartItems) total += item.Value;
+		return Number(total.toFixed(2));
 	};
 
 	return (
@@ -230,6 +236,9 @@ export default function Cart(props: Props) {
 									return CartItem(item, index);
 								})}
 								<div className=' flex flex-col w-full h-fit mt-auto gap-2'>
+									<div className='border-t-2'>
+										<h1>Total: £{countTotal()}</h1>
+									</div>
 									<button
 										className='w-full text-xl md:text-2xl bg-red-600 hover:bg-red-500 rounded-md p-2 text-white'
 										onClick={() => props.onClear()}>

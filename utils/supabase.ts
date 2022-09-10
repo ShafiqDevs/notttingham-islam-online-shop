@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { Product, Parcel } from './types';
+import { Product, Parcel, History } from './types';
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
@@ -42,16 +42,24 @@ const getParcelData = async (uid: number): Promise<any> => {
 		.select(`Weight,Height,Length,Width,ItemName, Value`)
 		.eq(`uid`, uid);
 
-	console.log(`fromsupabase: ${uid}`);
-	console.log(`from supabas:`, data);
+	// console.log(`fromsupabase: ${uid}`);
+	// console.log(`from supabas:`, data);
 
 	return data?.[0];
 };
 
-const insertParcel = async (parcels: Parcel[]) => {
+const insertParcel = async (parcels: Parcel[]): Promise<History> => {
 	let { data, error } = await supabase.from(`parcels`).insert(parcels);
-	let { data:history, error:error_history } = await supabase.from(`history`).insert(parcels);
+	let { data: history, error: error_history } = await supabase
+		.from(`history`)
+		.insert(parcels);
+
+	console.log({ history });
 	console.log(error);
+
+	return history?.[0] as History;
 };
+
+// const getOrderId = async (uid:k)
 
 export { getProducts, getValue, getParcelData, insertParcel };

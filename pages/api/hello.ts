@@ -10,7 +10,22 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<Data>
 ) {
-	await getProducts();
+	const sgMail = require('@sendgrid/mail');
+	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+	const msg = {
+		to: 'shafiq.belaroussi@gmail.com', // Change to your recipient
+		from: 'shafiq.belaroussi@outlook.com', // Change to your verified sender
+		subject: 'Sending with SendGrid is Fun',
+		html: `<strong>Your Order number #</strong>`,
+	};
+	sgMail
+		.send(msg)
+		.then(() => {
+			console.log('Email sent');
+		})
+		.catch((error: any) => {
+			console.error(error);
+		});
 
 	res.status(200).json({ name: 'John Doe' });
 }

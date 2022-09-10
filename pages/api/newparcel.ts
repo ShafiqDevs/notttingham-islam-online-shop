@@ -2,9 +2,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { buffer } from 'micro';
 import Stripe from 'stripe';
-import { Parcel, CheckoutMetadata } from '../../utils/types';
+import { Parcel, CheckoutMetadata, History } from '../../utils/types';
 import { getParcelData, insertParcel } from '../../utils/supabase';
-
 type Data = {
 	message: string;
 };
@@ -12,6 +11,8 @@ type Data = {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 	apiVersion: '2022-08-01',
 });
+
+// const novu = new Novu(process.env.MAILJET_KEY as string);
 
 export const config = {
 	api: {
@@ -56,8 +57,10 @@ export default async function handler(
 				const parcels: Parcel[] = await createParcel(metadata);
 				console.log(`line 49`);
 				console.log(parcels);
-				await insertParcel(parcels);
+				const history: History = await insertParcel(parcels);
 				console.log(`line 54`);
+				// send email notification
+				sendConfirmationEmail(metadata, history.uid);
 			} else {
 				console.log(`${event.type} is not my event bro`);
 				// res.status(400).json({ message: `webhook errror` });
@@ -103,4 +106,23 @@ async function createParcel(object: CheckoutMetadata): Promise<Parcel[]> {
 	console.log(`line 90  ${parcels}`);
 
 	return parcels;
+}
+
+async function sendConfirmationEmail(metadata: CheckoutMetadata, uid: string) {
+	const sgMail = require('@sendgrid/mail');
+	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+	const msg = {
+		to: metadata.customer.Email, // Change to your recipient
+		from: 'shafiq.belaroussi@outlook.com', // Change to your verified sender
+		subject: 'NIIC - Order Confirmation',
+		html: `<strong>Your Order number #${uid}</strong>`,
+	};
+	sgMail
+		.send(msg)
+		.then(() => {
+			console.log('Email sent');
+		})
+		.catch((error: any) => {
+			console.error(error);
+		});
 }
