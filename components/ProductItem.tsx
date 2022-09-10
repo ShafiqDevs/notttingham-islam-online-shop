@@ -26,13 +26,13 @@ export default function ProductItem(props: Props) {
 	};
 
 	return (
-		<div className='flex flex-col mx-auto max-w-sm md:w-full h-full text-center bg-custome_blue rounded-lg overflow-hidden text-white relative'>
+		<div className='flex flex-col mx-auto w-[90%] md:w-full h-full text-center bg-custome_blue rounded-lg overflow-hidden text-white shadow-md shadow-black/40 relative'>
 			<img
 				src={props.product.Image || `/bg-large.jpg`}
 				alt=''
 				width={100}
 				height={100}
-				className='w-full max-h-72 object-cover'
+				className='  w-full max-h-72 object-cover'
 			/>
 			<div className='flex flex-col gap-4 p-2'>
 				<h1 className='text-2xl font-semibold'>{product.ItemName}</h1>

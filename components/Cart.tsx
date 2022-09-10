@@ -31,13 +31,13 @@ export default function Cart(props: Props) {
 		return (
 			<div
 				key={uuidv4()}
-				className='flex items-center gap-8 bg-custome_blue md:w-max w-full p-4'>
+				className='flex items-center gap-8 bg-custome_blue md:w-max min-w-full w-full p-4'>
 				<img
 					src={`/niic.png`}
 					alt='img'
 					className='w-[70px] h-full object-cover'
 				/>
-				<div className='flex flex-col items-center'>
+				<div className='flex flex-col items-center mx-auto text-center'>
 					<h1 className='text-xl md:text-2xl font-semibold'>
 						{cartItem.ItemName}
 					</h1>
@@ -45,7 +45,7 @@ export default function Cart(props: Props) {
 					<h1 className='text-sm text-custome_gray'>{`£${cartItem.Value}`}</h1>
 				</div>
 				<button
-					className='bg-red-800 hover:bg-red-500 rounded-md p-2 text-sm'
+					className='bg-red-800 hover:bg-red-500 rounded-md p-2 text-sm ml-auto'
 					onClick={() => props.onRemove(index)}>
 					Remove
 				</button>

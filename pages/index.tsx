@@ -32,6 +32,7 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
 				<img
 					src={`/bg-large.jpg`}
 					className={`object-cover w-full h-full`}
+					alt={`bg`}
 				/>
 			</div>
 		);

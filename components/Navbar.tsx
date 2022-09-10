@@ -17,6 +17,7 @@ export default function Navbar({}: Props) {
 					width={100}
 					height={100}
 					objectFit={'fill'}
+					alt={`brand logo`}
 				/>
 				<h1
 					className='text-2xl ml-auto hover:cursor-pointer hover:text-custome_orange'
@@ -34,6 +35,7 @@ export default function Navbar({}: Props) {
 					width={500}
 					height={100}
 					objectFit={'fill'}
+					alt={`banner`}
 				/>
 			</div>
 		</div>
