@@ -78,14 +78,12 @@ export default async function handler(
 			checkout_url: session.url as string,
 		});
 	} catch (error: any) {
-		res
-			.status(400)
-			.json({
-				message: `error creating checkout ${error.message} ${{
-					vercelUrl: process.env.VERCEL_URL as string,
-					myUrl: process.env.PUBLIC_NEXT_URL as string,
-				}}`,
-			});
+		res.status(400).json({
+			message: `error creating checkout ${error.message} ${JSON.stringify({
+				vercelUrl: process.env.VERCEL_URL as string,
+				myUrl: process.env.PUBLIC_NEXT_URL as string,
+			})}`,
+		});
 	}
 }
 
