@@ -62,8 +62,8 @@ export default async function handler(
 		console.log({ vercelUrl, myUrl });
 
 		const session = await stripe.checkout.sessions.create({
-			cancel_url: `${myUrl}/`,
-			success_url: `${myUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `https://${myUrl}/`,
+			success_url: `https://${myUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
 			mode: `payment`,
 			line_items: line_items,
 			customer_email: customer.Email,
