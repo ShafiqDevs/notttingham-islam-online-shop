@@ -96,8 +96,8 @@ const Home: NextPage<PageProps> = (props: PageProps) => {
 					onPay={(customer) => pay(customer)}
 				/>
 			</div>
-			<h1></h1>
-			<div className='grid md:grid-cols-3 lg:grid-cols-4  gap-2 w-full h-full mt-11 p-7'>
+			<h1 className='text-4xl md:text-3xl text-white text-center mt-4'>Quran Translations</h1>
+			<div className='grid md:grid-cols-3 lg:grid-cols-4  gap-4 w-full md:w-[70%] h-full mt-11 p-7'>
 				{props.products.map((product: Product) => {
 					return (
 						<ProductItem

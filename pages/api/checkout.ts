@@ -56,9 +56,12 @@ export default async function handler(
 		const metadata = createMetadata(customer, cartItems);
 		console.log(`metadata has: `, JSON.stringify(metadata).length);
 
+		const vercelUrl = process.env.VERCEL_URL as string;
+		const myUrl = vercelUrl || (process.env.PUBLIC_NEXT_URL as string);
+
 		const session = await stripe.checkout.sessions.create({
-			cancel_url: `${process.env.PUBLIC_NEXT_URL}/`,
-			success_url: `${process.env.PUBLIC_NEXT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `${myUrl}/`,
+			success_url: `${myUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
 			mode: `payment`,
 			line_items: line_items,
 			customer_email: customer.Email,
