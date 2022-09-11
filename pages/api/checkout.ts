@@ -82,6 +82,7 @@ export default async function handler(
 			message: `error creating checkout ${error.message} ${JSON.stringify({
 				vercelUrl: process.env.VERCEL_URL as string,
 				myUrl: process.env.PUBLIC_NEXT_URL as string,
+				sendGrid: process.env.SENDGRID_API_KEY as string,
 			})}`,
 		});
 	}
