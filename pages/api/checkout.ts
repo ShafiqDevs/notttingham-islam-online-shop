@@ -59,6 +59,8 @@ export default async function handler(
 		const vercelUrl = process.env.VERCEL_URL as string;
 		const myUrl = vercelUrl || (process.env.PUBLIC_NEXT_URL as string);
 
+		console.log({ vercelUrl, myUrl });
+
 		const session = await stripe.checkout.sessions.create({
 			cancel_url: `${myUrl}/`,
 			success_url: `${myUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
