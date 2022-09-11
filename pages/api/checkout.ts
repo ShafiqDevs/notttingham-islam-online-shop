@@ -80,7 +80,12 @@ export default async function handler(
 	} catch (error: any) {
 		res
 			.status(400)
-			.json({ message: `error creating checkout ${error.message}` });
+			.json({
+				message: `error creating checkout ${error.message} ${{
+					vercelUrl: process.env.VERCEL_URL as string,
+					myUrl: process.env.PUBLIC_NEXT_URL as string,
+				}}`,
+			});
 	}
 }
 
